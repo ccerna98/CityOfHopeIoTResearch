@@ -18,7 +18,41 @@ var goalList = [Goal]()
 var wellnessQuestionList = [WellnessQuestion]()
 var wellnessResponsesList = [WellnessResponse]()
 
-let largeNumber: Int = 10000
+let largeNumber: Int = 1000000000
+
+
+func generateID() -> String {
+    let date = Date()
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyyMMddHHmmssSSS"
+    return formatter.string(from: date)
+}
+
+func getDate(_ string: String) -> Date {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyyMMddHHmmssSSS"
+    return formatter.date(from: string)!
+}
+
+func convertFormatFromID(id: String, format: String) -> String {
+    let date = getDate(id)
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = format
+    return dateFormatter.string(from: date)
+}
+
+func saveContext() {
+    do {
+        try context.save()
+        print("Context saved")
+    } catch {
+        print("Failed saving")
+    }
+}
+
+
+
+
 
 // general data management
 func clearAllEntityData(entityName: String) {
@@ -32,6 +66,8 @@ func clearAllEntityData(entityName: String) {
                 context.delete(items[index])
             }
             try context.save()
+            print(entityName)
+            print("data cleared")
         }
     } catch {
         print("Failed saving")
@@ -64,7 +100,7 @@ func getData(entityName: String) {
         
         do {
             exerciseList = try context.fetch(fetchRequest)
-            print("Fetched wellness questions successfully")
+            print("Fetched exercises successfully")
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
@@ -77,7 +113,7 @@ func getData(entityName: String) {
         
         do {
             exerciseStatsList = try context.fetch(fetchRequest)
-            print("Fetched wellness questions successfully")
+            print("Fetched excercise stats successfully")
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
@@ -89,7 +125,7 @@ func getData(entityName: String) {
         
         do {
             goalList = try context.fetch(fetchRequest)
-            print("Fetched wellness questions successfully")
+            print("Fetched goals successfully")
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
@@ -101,6 +137,8 @@ func getData(entityName: String) {
         
         do {
             wellnessQuestionList = try context.fetch(fetchRequest)
+            //print(wellnessQuestionList)
+           
             print("Fetched wellness questions successfully")
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
@@ -115,6 +153,7 @@ func getData(entityName: String) {
         do {
             wellnessResponsesList = try context.fetch(fetchRequest)
             print("Fetched wellness responses successfully")
+            
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
@@ -169,7 +208,7 @@ func addGoal(achieved: Bool, entry: String) {
     }
 }
 
-func addWellnessQuestion(question: String, isSlider: Bool, response: WellnessResponse?) {
+func addWellnessQuestion(question: String, isSlider: Bool, response: Set<WellnessResponse>) {
     let wellnessQuestion = WellnessQuestion(entity: WellnessQuestion.entity(), insertInto: context)
     wellnessQuestion.date = Date()
     wellnessQuestion.question = question
@@ -178,23 +217,23 @@ func addWellnessQuestion(question: String, isSlider: Bool, response: WellnessRes
     
     do {
         try context.save()
-        print("Goal saved")
+        print("Question saved")
     } catch {
         print("Failed saving")
     }
 }
 
 func addWellnessResponse(slider: Float, bool: Bool, question: WellnessQuestion) {
-//    let wellnessResponse = WellnessResponse(entity: WellnessResponse.entity(), insertInto: context)
-//    wellnessResponse.date = Date()
-//    wellnessResponse.sliderResult = slider
-//    wellnessResponse.yesNoResult = bool
-//    wellnessResponse.wellnessQuestion = question
-//
-//    do {
-//        try context.save()
-//        print("Goal saved")
-//    } catch {
-//        print("Failed saving")
-//    }
+    let wellnessResponse = WellnessResponse(entity: WellnessResponse.entity(), insertInto: context)
+    wellnessResponse.date = Date()
+    wellnessResponse.sliderResult = slider
+    wellnessResponse.yesNoResult = bool
+    wellnessResponse.wellnessQuestion = question
+
+    do {
+        try context.save()
+        print("Wellness Response saved")
+    } catch {
+        print("Failed saving")
+    }
 }

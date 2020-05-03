@@ -23,5 +23,14 @@ extension UIButton {
         layer.borderColor = borderColor.cgColor
         layer.cornerRadius = cornerRadius
         backgroundColor = fillColor
+        titleEdgeInsets = UIEdgeInsets(top: 0, left: cornerRadius, bottom: 0, right: cornerRadius)
+    }
+    
+    func setButtonFrame(borderWidth: CGFloat, borderColor: UIColor, cornerRadius: CGFloat, fillColor: UIColor, inset: CGFloat) {
+        layer.borderWidth = borderWidth
+        layer.borderColor = borderColor.cgColor
+        layer.cornerRadius = cornerRadius
+        backgroundColor = fillColor
+        titleEdgeInsets = UIEdgeInsets(top: 0, left: inset, bottom: 0, right: inset)
     }
 }

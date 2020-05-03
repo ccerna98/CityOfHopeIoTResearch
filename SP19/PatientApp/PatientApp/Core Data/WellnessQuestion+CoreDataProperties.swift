@@ -20,7 +20,9 @@ extension WellnessQuestion {
     @NSManaged public var isSlider: Bool
     @NSManaged public var question: String
     @NSManaged public var date: Date
-    @NSManaged public var wellnessResponse: WellnessResponse?
+    @NSManaged public var wellnessResponse: Set<WellnessResponse>
+    
+    @NSManaged public var id: String
 
 }
 

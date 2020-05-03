@@ -42,13 +42,12 @@ class ExerciseGuideViewController: UIViewController, ViewConstraintProtocol {
     
     internal func setupViews() {
         // setup back button
-        backButton.setButtonParams(color: .gray, string: "< Back", ftype: "Montserrat-Regular",
-                                   fsize: 16, align: .center)
-        backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
+       // backButton.setButtonParams(color: .gray, string: "< Back", ftype: "Montserrat-Regular",
+         //                          fsize: 16, align: .center)
+       // backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
         
         // setup exercise label
-        exLabel.setLabelParams(color: hsbShadeTint(color: colorTheme, sat: 0.40), string: exerciseName,
-                               ftype: "Montserrat-ExtraLight", fsize: 24, align: .left)
+        exLabel.setLabelParams(color: hsbShadeTint(color: colorTheme, sat: 0.40), string: exerciseName, ftype: "Montserrat-ExtraLight", fsize: 24, align: .left)
         
         // setup image view
         exImageView.frame = .zero

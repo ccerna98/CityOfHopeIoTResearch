@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "container:PatientApp.xcodeproj">
+      location = "container:/Users/eng_clinic/Documents/GitHub/CityOfHopeIoTResearch/SP19/PatientApp/ PatientApp.xcodeproj">
    </FileRef>
 </Workspace>

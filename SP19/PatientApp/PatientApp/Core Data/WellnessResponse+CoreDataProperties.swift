@@ -20,6 +20,8 @@ extension WellnessResponse {
     @NSManaged public var date: Date
     @NSManaged public var yesNoResult: Bool
     @NSManaged public var sliderResult: Float
-    @NSManaged public var wellnessQuestion: WellnessQuestion
+    @NSManaged public var wellnessQuestion: WellnessQuestion?
+    
+    @NSManaged public var id: String
 
 }

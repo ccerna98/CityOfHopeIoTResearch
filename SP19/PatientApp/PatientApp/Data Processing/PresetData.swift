@@ -25,7 +25,7 @@ struct ExerciseStatsStruct {
 let presetExerciseStats = [ExerciseStatsStruct(rangeOfMotion: 15.5, repetitions: 2, exercise: Exercise(context: context))]
 
 // Goals
-let presetGoalList = ["Cook for my kids",
+let presetGoalList = ["Cook for all of my kids",
                       "Put on makeup by myself",
                       "Tie up my hair",
                       "Shower by myself",
@@ -49,17 +49,20 @@ let presetWellnessQuestionList =
      WellnessQuestionStruct(question: "Can you perform light cooking without assistance?"       , isSlider: false),
      WellnessQuestionStruct(question: "Can you perform light house cleaning without assistance?", isSlider: false)]
 
-//let presetQuestionStringList = ["Do you have pain?",
-//                                "Do you have tightness?",
-//                                "Do you have anxiety pain?",
-//                                "Can you put on your shirt without assistance?",
-//                                "Can you put on your pants without assistance?",
-//                                "Can you comb your hair without assistance?",
-//                                "Can you shower without assistance?",
-//                                "Can you use the toilet without assistance?",
-//                                "Can you perform light cooking without assistance?",
-//                                "Can you perform light house cleaning without assistance?"]
-//
-//let presetQuestionSliderList = [true, true, true, false, false, false, false, false, false, false]
+let presetQuestionStringList = ["Do you have any pain?",
+                                "Do you have tightness?",
+                                "Are you experiencing any hardening, thickening, or redness of the skin?",
+                                "Are you experiencing any swelling in your arms?",
+                                "Are you experiencing any heaviness in your arms?",
+                                "Do you have anxiety pain?",
+                                "Can you put on your shirt without assistance?",
+                                "Can you put on your pants without assistance?",
+                                "Can you comb your hair without assistance?",
+                                "Can you shower without assistance?",
+                                "Can you use the toilet without assistance?",
+                                "Can you perform light cooking without assistance?",
+                                "Can you perform light house cleaning without assistance?"]
+
+let presetQuestionSliderList = [true, true, false, false, false, true, false, false, false, false, false, false, false, false]
 
 // Wellness Response

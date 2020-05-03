@@ -21,7 +21,7 @@ class CDViewController: UIViewController {
     // construction variables
     let homeButton = UIButton()
     
-    let entitySelection = UISegmentedControl(items: ["Exercises", "Sessions", "Goals", "Questions", "Responses"])
+    let entitySelection = UISegmentedControl(items: ["Exercises", "Sessions", "Goals", "Responses"])
     let fakeButton = UIButton()
     let loadButton = UIButton()
     let resetButton = UIButton()
@@ -66,8 +66,6 @@ extension CDViewController: UITableViewDelegate, UITableViewDataSource {
             return goalList.count
         } else if section == 3 {
             return wellnessQuestionList.count
-        } else if section == 4 {
-            return 0
         } else {
             return 0
         }
@@ -86,6 +84,7 @@ extension CDViewController: UITableViewDelegate, UITableViewDataSource {
         var data2String = String()
         
         let section = entitySelection.selectedSegmentIndex
+        print(section)
         
         if section == 0 {
             
@@ -104,14 +103,20 @@ extension CDViewController: UITableViewDelegate, UITableViewDataSource {
             data2String = ""
 
         } else if section == 3 {
+            //@Ragini, we weren't able to figure out how to clear the responses correctly, we just used a band-aid if/else statement to solve it.
+            if wellnessResponsesList.count == 0 {
+                dateString = ""
+                data0String = ""
+                data1String = ""
+                data2String = ""
+            }
+            else {
+            dateString = "date: \(dateFormatter.string(from: wellnessResponsesList[indexPath.row].date))"
+            data1String = "Response: \(wellnessResponsesList[indexPath.row].yesNoResult)"
+            data2String = "Slider Value: \(wellnessResponsesList[indexPath.row].sliderResult)"
+            data0String = "\(String(describing: wellnessQuestionList[indexPath.row].question))"
+            }
             
-            dateString = "date: \(dateFormatter.string(from: wellnessQuestionList[indexPath.row].date))"
-            data0String = "\(indexPath.row): \(wellnessQuestionList[indexPath.row].question)"
-            data1String = "Is it a slider?: \(wellnessQuestionList[indexPath.row].isSlider)"
-            data2String = ""
-            
-        } else if section == 4 {
-            return UITableViewCell()
         } else {
             return UITableViewCell()
         }
@@ -141,7 +146,7 @@ extension CDViewController: ViewConstraintProtocol {
         self.view.addSubview(homeButton)
         
         groupButtonSetup(button: loadButton, text: "Load", action: #selector(loadData))
-        groupButtonSetup(button: fakeButton, text: "Fake", action: #selector(fakeData))
+        //groupButtonSetup(button: fakeButton, text: "Fake", action: #selector(fakeData))
         groupButtonSetup(button: addButton, text: "Add", action: #selector(addData))
         groupButtonSetup(button: removeButton, text: "Del", action: #selector(removeData))
         groupButtonSetup(button: resetButton, text: "Reset", action: #selector(resetData))
@@ -176,20 +181,20 @@ extension CDViewController: ViewConstraintProtocol {
         addButton.translatesAutoresizingMaskIntoConstraints = false
         addButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
         addButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        addButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        addButton.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        addButton.trailingAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        addButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
         
-        fakeButton.translatesAutoresizingMaskIntoConstraints = false
+   /*     fakeButton.translatesAutoresizingMaskIntoConstraints = false
         fakeButton.topAnchor.constraint(equalTo: addButton.topAnchor).isActive = true
         fakeButton.heightAnchor.constraint(equalTo: addButton.heightAnchor).isActive = true
         fakeButton.widthAnchor.constraint(equalTo: addButton.widthAnchor).isActive = true
         fakeButton.trailingAnchor.constraint(equalTo: addButton.leadingAnchor, constant: -10).isActive = true
-
+ */
         loadButton.translatesAutoresizingMaskIntoConstraints = false
         loadButton.topAnchor.constraint(equalTo: addButton.topAnchor).isActive = true
         loadButton.heightAnchor.constraint(equalTo: addButton.heightAnchor).isActive = true
         loadButton.widthAnchor.constraint(equalTo: addButton.widthAnchor).isActive = true
-        loadButton.trailingAnchor.constraint(equalTo: fakeButton.leadingAnchor, constant: -10).isActive = true
+        loadButton.trailingAnchor.constraint(equalTo: addButton.leadingAnchor, constant: -10).isActive = true
 
         removeButton.translatesAutoresizingMaskIntoConstraints = false
         removeButton.topAnchor.constraint(equalTo: addButton.topAnchor).isActive = true
@@ -211,8 +216,8 @@ extension CDViewController: ViewConstraintProtocol {
     }
     
     func groupButtonSetup(button: UIButton, text: String, action: Selector) {
-        button.setButtonParams(color: .white, string: text, ftype: "Montserrat-Regular", fsize: 16, align: .center)
-        button.setButtonFrame(borderWidth: 1.5, borderColor: colorTheme, cornerRadius: 20, fillColor: colorTheme)
+        button.setButtonParams(color: .white, string: text, ftype: "Montserrat-Regular", fsize: 14, align: .center)
+        button.setButtonFrame(borderWidth: 0.25, borderColor: colorTheme, cornerRadius: 20, fillColor: colorTheme)
         button.setTitleColor(.darkGray, for: .highlighted)
         button.addTarget(self, action: action, for: .touchUpInside)
         self.view.addSubview(button)
@@ -245,11 +250,8 @@ extension CDViewController {
             getData(entityName: entity)
             dataTable.reloadData()
         case 3: // question
-            dataTable.rowHeight = 85
-            getData(entityName: entity)
-            dataTable.reloadData()
-        case 4: // response
-            dataTable.rowHeight = 30
+            dataTable.rowHeight = 105
+            getData(entityName: "WellnessQuestion")
             getData(entityName: entity)
             dataTable.reloadData()
         default:
@@ -267,23 +269,26 @@ extension CDViewController {
             for i in 0..<presetExerciseList.count {
                 addExercise(exerciseName: presetExerciseList[i], stats: nil)
             }
-        } else if entitySelection.selectedSegmentIndex == 1 {
+      //  } else if entitySelection.selectedSegmentIndex == 1 {
             
         } else if entitySelection.selectedSegmentIndex == 2 {
             for i in 0..<presetGoalList.count {
                 addGoal(achieved: false, entry: presetGoalList[i])
             }
-        } else if entitySelection.selectedSegmentIndex == 3 {
-            var question: WellnessQuestionStruct!
+      /*  } else if entitySelection.selectedSegmentIndex == 3 {
+            print("load question data")
             var string: String!
             var bool: Bool!
             for i in 0..<presetWellnessQuestionList.count {
-                question = presetWellnessQuestionList[i]
-                string = question.question
-                bool = question.isSlider
-                addWellnessQuestion(question: string, isSlider: bool, response: nil)
+                string = presetQuestionStringList[i]
+                bool = presetQuestionSliderList[i]
+                addWellnessQuestion(question: string, isSlider: bool, response: Set<WellnessResponse>())
+
             }
         } else if entitySelection.selectedSegmentIndex == 4 {
+            print("load response data")
+            
+        */
             
         } else {
             
@@ -296,7 +301,8 @@ extension CDViewController {
     @objc func fakeData(_ sender: UIButton) {
         print("fake data")
         let number = Int.random(in: 1000..<10000)
-
+        //let questionfake = [WellnessQuestion]()
+        //questionfake[1].question = "Hi imdoug"
         if entitySelection.selectedSegmentIndex == 0 {
             addExercise(exerciseName: "Exercise number \(number)", stats: nil)
         } else if entitySelection.selectedSegmentIndex == 1 {
@@ -304,9 +310,9 @@ extension CDViewController {
         } else if entitySelection.selectedSegmentIndex == 2 {
             addGoal(achieved: Bool.random(), entry: "Goal number \(number)")
         } else if entitySelection.selectedSegmentIndex == 3 {
-            addWellnessQuestion(question: "Question number \(number)", isSlider: Bool.random(), response: nil)
+            addWellnessQuestion(question: "Question number \(number)", isSlider: Bool.random(), response: Set<WellnessResponse>())
         } else if entitySelection.selectedSegmentIndex == 4 {
-//            addWellnessResponse(slider: 5, bool: Bool.random(), question: )
+            //addWellnessResponse(slider: 5, bool: Bool.random(), question: questionfake[1])
         } else {
             
         }
@@ -335,9 +341,11 @@ extension CDViewController {
             }))
             
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
             
-        } else if self.entitySelection.selectedSegmentIndex == 1 {
-            
+ /*       } else if self.entitySelection.selectedSegmentIndex == 1 {
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+  */
         } else if self.entitySelection.selectedSegmentIndex == 2 {
             
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
@@ -349,13 +357,14 @@ extension CDViewController {
             }))
             
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
             
-        } else if self.entitySelection.selectedSegmentIndex == 3 {
+   /*     } else if self.entitySelection.selectedSegmentIndex == 3 {
             
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
                 let textField = alert!.textFields![0] // Force unwrapping because we know it exists.
                 goalText = textField.text
-                addWellnessQuestion(question: goalText, isSlider: false, response: nil)
+                addWellnessQuestion(question: goalText, isSlider: false, response: Set<WellnessResponse>())
                 getData(entityName: self.entity)
                 self.dataTable.reloadData()
             }))
@@ -364,9 +373,9 @@ extension CDViewController {
             
         } else if self.entitySelection.selectedSegmentIndex == 4 {
             
-        }
+*/        }
 
-        self.present(alert, animated: true, completion: nil)
+        //self.present(alert, animated: true, completion: nil)
     }
     
     @objc func removeData(_ sender: UIButton) {
@@ -380,11 +389,23 @@ extension CDViewController {
     @objc func resetData(_ sender: UIButton) {
         print("reset data")
         let alert = UIAlertController(title: "Warning", message: "Clear All \(cellName)s", preferredStyle: .alert)
-
+        
+        
+        //@Ragini, we weren't able to figure out how to clear the responses correctly, we just used a band-aid if/else statement to solve it.
         alert.addAction(UIAlertAction(title: "Proceed", style: .destructive, handler: { action in
-            clearAllEntityData(entityName: self.entity)
-            getData(entityName: self.entity)
-            self.dataTable.reloadData()
+            if self.entity != "WellnessResponse"{
+                clearAllEntityData(entityName: self.entity)
+                getData(entityName: self.entity)
+                self.dataTable.reloadData()
+            }
+            else {
+                clearAllEntityData(entityName: "WellnessQuestion")
+                getData(entityName: "WellnessQuestion")
+                clearAllEntityData(entityName: "WellnessResponse")
+                getData(entityName: "WellnessResponse")
+                self.dataTable.reloadData()
+                
+            }
         }))
 
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -400,8 +421,6 @@ extension CDViewController {
         } else if x == 2 {
             return "Goal"
         } else if x == 3 {
-            return "WellnessQuestion"
-        } else if x == 4 {
             return "WellnessResponse"
         } else {
             return ""
@@ -416,8 +435,6 @@ extension CDViewController {
         } else if x == 2 {
             return "Goal"
         } else if x == 3 {
-            return "Question"
-        } else if x == 4 {
             return "Response"
         } else {
             return ""

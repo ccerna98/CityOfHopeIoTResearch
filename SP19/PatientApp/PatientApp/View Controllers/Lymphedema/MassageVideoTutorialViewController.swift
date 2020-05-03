@@ -17,13 +17,16 @@ class MassageVideoTutorialViewController: UIViewController, UIScrollViewDelegate
             scrollView.delegate = self
         }
     }
-        
-    
     @IBOutlet weak var pageControl: UIPageControl!
-    
-    
     @IBOutlet weak var titleLabel: UILabel!
     
+    //subviews
+    let headerView = Header()
+    
+    //private variables
+    private let colorTheme = UIColor(named: "purple")!
+
+
             var slides:[Slide] = [];
             
             override func viewDidLoad() {
@@ -39,6 +42,15 @@ class MassageVideoTutorialViewController: UIViewController, UIScrollViewDelegate
                 view.bringSubviewToFront(pageControl)
                 
                 view.bringSubviewToFront(titleLabel)
+                
+                //create the nice header with the necessary constraints
+                headerView.updateHeader(text: "Massage Tutorials", color: hsbShadeTint(color: colorTheme, sat: 0.25), fsize: 30)
+                self.view.addSubview(headerView)
+                headerView.translatesAutoresizingMaskIntoConstraints = false
+                headerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+                headerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+                headerView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
+                headerView.heightAnchor.constraint(equalToConstant: 100.0).isActive = true
             }
 
             override func didReceiveMemoryWarning() {
