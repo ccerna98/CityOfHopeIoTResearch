@@ -137,8 +137,7 @@ func getData(entityName: String) {
         
         do {
             wellnessQuestionList = try context.fetch(fetchRequest)
-            //print(wellnessQuestionList)
-           
+            
             print("Fetched wellness questions successfully")
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")

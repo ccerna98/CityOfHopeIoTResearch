@@ -28,6 +28,7 @@ class WhatIsLymphedemaViewController: UIViewController, UIScrollViewDelegate {
         headerView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
         headerView.heightAnchor.constraint(equalToConstant: 100.0).isActive = true
         
+        //constrain the scroll view. these have high priority than the priority set in the storyboard
         scrollView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 0).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: 121).isActive = true
         scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true

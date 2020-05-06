@@ -4,7 +4,7 @@
 //
 //  Created by Darien Joso on 3/10/19.
 //  Copyright © 2019 Darien Joso. All rights reserved.
-//
+//  Edited by Douglas Raigosa and Celeste Cerna 05/2020
 
 import UIKit
 
@@ -37,25 +37,18 @@ class WellnessTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func updateQuestionCell(color: UIColor, questionNum: Int, text: String, slider: Bool, yes: Bool?, sliderVal: Float) {
+    // function is called to load the cell with information once the user answers
+    func updateQuestionCell(color: UIColor, questionNum: Int, text: String, slider: Bool, answer: Bool?, sliderVal: Float) {
         colorTheme = color
         questionNumber = questionNum
         question = text
         isSlider = slider
-        boolResult = yes
+        boolResult = answer
         sliderResult = sliderVal
         setupViews()
         setupConstraints()
     }
-    
-    func updateQuestion(color: UIColor, questionNum: Int, text: String, slider: Bool){
-        colorTheme = color
-        questionNumber = questionNum
-        question = text
-        isSlider = slider
-        setupViews()
-        setupConstraints()
-    }
+
 }
 
 // MARK: button actions
@@ -75,7 +68,7 @@ extension WellnessTableViewCell {
 
 extension WellnessTableViewCell: ViewConstraintProtocol {
     internal func setupViews() {
-        
+        // setting up the question view
         numberLabel.setLabelParams(color: .gray, string: "\(questionNumber ?? 99).", ftype: "Arial", fsize: 16, align: .left)
         questionLabel.setLabelParams(color: .gray, string: question, ftype: "Arial", fsize: 16, align: .left)
         
@@ -83,7 +76,7 @@ extension WellnessTableViewCell: ViewConstraintProtocol {
 
         self.addSubview(numberLabel)
         self.addSubview(questionLabel)
-        
+        // setting up slider
         if isSlider {
             slider.frame = CGRect(x: 0, y: 0, width: 250, height: 35)
             slider.minimumTrackTintColor = hsbShadeTint(color: colorTheme, sat: 0.3)

@@ -4,7 +4,7 @@
 //
 //  Created by Darien Joso on 3/26/19.
 //  Copyright © 2019 Darien Joso. All rights reserved.
-//
+//  Edited by Douglas Raigosa and Celeste Cerna 05/2020
 
 import UIKit
 
@@ -31,23 +31,8 @@ let presetGoalList = ["Cook for all of my kids",
                       "Shower by myself",
                       "Drive myself to work"]
 
-// Wellness Question
-struct WellnessQuestionStruct {
-    let question: String
-    let isSlider: Bool
-}
-
-let presetWellnessQuestionList =
-    [WellnessQuestionStruct(question: "Do you have pain?"                                       , isSlider: true),
-     WellnessQuestionStruct(question: "Do you have tightness?"                                  , isSlider: true),
-     WellnessQuestionStruct(question: "Do you have anxiety pain?"                               , isSlider: true),
-     WellnessQuestionStruct(question: "Can you put on your shirt without assistance?"           , isSlider: false),
-     WellnessQuestionStruct(question: "Can you put on your pants without assistance?"           , isSlider: false),
-     WellnessQuestionStruct(question: "Can you comb your hair without assistance?"              , isSlider: false),
-     WellnessQuestionStruct(question: "Can you shower without assistance?"                      , isSlider: false),
-     WellnessQuestionStruct(question: "Can you use the toilet without assistance?"              , isSlider: false),
-     WellnessQuestionStruct(question: "Can you perform light cooking without assistance?"       , isSlider: false),
-     WellnessQuestionStruct(question: "Can you perform light house cleaning without assistance?", isSlider: false)]
+// preset question list and whether or not they're sliders
+// used to create wellness views
 
 let presetQuestionStringList = ["Do you have any pain?",
                                 "Do you have tightness?",

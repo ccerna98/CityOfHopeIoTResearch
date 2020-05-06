@@ -4,6 +4,7 @@
 //
 //  Created by Darien Joso on 3/23/19.
 //  Copyright © 2019 Darien Joso. All rights reserved.
+//  Edited by Douglas Raigosa and Celeste Cerna 05/2020
 //
 
 import UIKit
@@ -20,6 +21,7 @@ class CDViewController: UIViewController {
 
     // construction variables
     let homeButton = UIButton()
+    
     
     let entitySelection = UISegmentedControl(items: ["Exercises", "Sessions", "Goals", "Responses"])
     let fakeButton = UIButton()
@@ -113,8 +115,14 @@ extension CDViewController: UITableViewDelegate, UITableViewDataSource {
             else {
             dateString = "date: \(dateFormatter.string(from: wellnessResponsesList[indexPath.row].date))"
             data1String = "Response: \(wellnessResponsesList[indexPath.row].yesNoResult)"
-            data2String = "Slider Value: \(wellnessResponsesList[indexPath.row].sliderResult)"
-            data0String = "\(String(describing: wellnessQuestionList[indexPath.row].question))"
+                if wellnessQuestionList[indexPath.row].isSlider == true{
+                    data2String = "Slider Value: \(wellnessResponsesList[indexPath.row].sliderResult)"
+                    data0String = "\(String(describing: wellnessQuestionList[indexPath.row].question))"
+                }
+                else{
+                    data2String = ""
+                    data0String = "\(String(describing: wellnessQuestionList[indexPath.row].question))"
+                }
             }
             
         } else {

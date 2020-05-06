@@ -4,7 +4,7 @@
 //
 //  Created by Darien Joso on 3/5/19.
 //  Copyright © 2019 Darien Joso. All rights reserved.
-//
+//  
 
 import UIKit
 
@@ -21,7 +21,7 @@ class HomeViewController: UIViewController, ViewConstraintProtocol {
     private let colorTheme = UIColor(named: "blue")!
     private let BTtest: Bool = true
     private let CDtest: Bool = true
-
+    
     // subviews
     private let headerView = Header()
     private let goalView = HomeMotivator()
@@ -36,7 +36,7 @@ class HomeViewController: UIViewController, ViewConstraintProtocol {
         super.viewDidLoad()
         
         // set the tab bar item title and image
-        self.tabBarItem.selectedImage = UIImage(named: "home")!
+        //self.tabBarItem.selectedImage = UIImage(named: "home")!
         self.tabBarItem.title = "Home"
         
         // temporarily loading these variables manually
@@ -61,7 +61,7 @@ class HomeViewController: UIViewController, ViewConstraintProtocol {
     
     internal func setupViews() {
         // update all of the views
-        headerView.updateHeader(text: "Hello, Jane", color: colorTheme, fsize: 30)
+        headerView.updateHeader(text: "Home", color: colorTheme, fsize: 30)
         goalView.updateGoals(goalList: goals)
         circleGraph.updateProgressGraph(color: colorTheme, exNum: 2, exVal: exerciseValues, exName: exerciseNames)
         BTView.updateBTStatus(connStat: BTDidConnect, uuidString: serviceUUID)
@@ -72,6 +72,7 @@ class HomeViewController: UIViewController, ViewConstraintProtocol {
         self.view.addSubview(circleGraph)
         self.view.addSubview(BTView)
         
+       
         // if needed for testing, include the BT tab
         if BTtest {
             BTButton.setButtonParams(color: .gray, string: "BT", ftype: "Montserrat-Regular", fsize: 16, align: .center)
@@ -85,6 +86,7 @@ class HomeViewController: UIViewController, ViewConstraintProtocol {
             CDButton.addTarget(self, action: #selector(CDButtonPressed), for: .touchUpInside)
             self.view.addSubview(CDButton)
         }
+        
     }
     
     internal func setupConstraints() {
@@ -145,4 +147,5 @@ class HomeViewController: UIViewController, ViewConstraintProtocol {
     
     // brings the user back to the home VC
     @IBAction func unwindToHomeVC(segue: UIStoryboardSegue) {}
+    
 }
